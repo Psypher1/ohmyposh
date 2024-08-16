@@ -2,7 +2,7 @@
 
 version = 2
 final_space = true
-console_title_template = "{{ .Shell }} in {{ .Folder }}"
+console_title_template = "{{ .Folder }}"
 enable_cursor_positioning = true
 
 [[blocks]]
@@ -15,29 +15,12 @@ enable_cursor_positioning = true
     style = "plain"
     template = "➜ "
   
-  # [[blocks.segments]]
-  #   leading_diamond = ""
-  #   style = "plain"
-  #   template = " {{ if .WSL }}WSL at {{ end }}{{.Icon}}"
-  #   trailing_diamond = "<transparent,#FEF5ED></>"
-  #   type = "os"
-
-  #   [blocks.segments.properties]
-  #     macos = " "
-  #     ubuntu = " "
-  #     windows = " "
-
-  # [[blocks.segments]]
-  # type = "session"
-  # style = "plain"
-  # template = " {{ .UserName }} on "
-
   [[blocks.segments]]
     type = "path"
     style = "plain"
     background = "transparent"
     foreground = "p:cyan-alt"
-    template = "{{ .Path }}"
+    template = "󰉖 {{ path .Path .Location }}"
    
     [blocks.segments.properties]
       folder_separator_icon = "/"
@@ -49,24 +32,23 @@ enable_cursor_positioning = true
     style = "plain"
     background = "transparent"
     foreground = "p:git-grey"
-    template = " <#a0a0a0>{{.Working.Untracked}}</> {{ .HEAD }}{{ if or (.Working.Changed) (.Staging.Changed) }}*{{ end }} <cyan>{{ if gt .Behind 0 }}↓{{ .Behind}}{{ end }}{{ if gt .Ahead 0}}↑{{ .Ahead}}{{end}}</>"
-    # template = " {{ .UpstreamIcon }}{{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }}  {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }}  {{ .Staging.String }}{{ end }}"
-   
+    template = " <#a0a0a0>{{.Working.Untracked}}</> {{ url .HEAD .UpstreamURL }}{{ if or (.Working.Changed) (.Staging.Changed) }}*{{ end }} <cyan>{{ if gt .Behind 0 }}↓{{ .Behind}}{{ end }}{{ if gt .Ahead 0}}↑{{ .Ahead}}{{end}}</>"
+    
    
     [blocks.segments.properties]
       commit_icon  = "@"
       fetch_status = true
 
 [[blocks]]
-  type = "prompt"
-  alignment = "right"
+  type = "rprompt"
+  # alignment = "right"
   overflow = "hidden"
   
   [[blocks.segments]]
     type = "python"
     style = "plain"
     foreground = "#3670A0"
-    template = " {{ if .Venv }}{{ .Venv }} {{ end }}"
+    template = " {{ if .Venv }}{{ .Venv }} {{ .Full }} {{ end }}"
 
   [[blocks.segments]]
     type = "php"
