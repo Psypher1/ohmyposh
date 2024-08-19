@@ -2,6 +2,7 @@
 
 version = 2
 final_space = true
+# console_title_template = "{{ .Shell }} in {{ .Folder }}"
 console_title_template = "{{ .Folder }}"
 enable_cursor_positioning = true
 
@@ -15,11 +16,30 @@ enable_cursor_positioning = true
     style = "plain"
     template = "➜ "
   
+  # [[blocks.segments]]
+  #   leading_diamond = ""
+  #   style = "plain"
+  #   template = " {{ if .WSL }}WSL at {{ end }}{{.Icon}}"
+  #   trailing_diamond = "<transparent,#FEF5ED></>"
+  #   type = "os"
+
+  #   [blocks.segments.properties]
+  #     macos = " "
+  #     ubuntu = " "
+  #     windows = " "
+
+  # [[blocks.segments]]
+  # type = "session"
+  # style = "plain"
+  # template = " {{ .UserName }} on "
+
   [[blocks.segments]]
     type = "path"
     style = "plain"
     background = "transparent"
     foreground = "p:cyan-alt"
+    # template = "{{ .Path }}"
+    # template = " 󰉖 {{ path .Path .Location }}"
     template = "󰉖 {{ path .Path .Location }}"
    
     [blocks.segments.properties]
@@ -33,22 +53,38 @@ enable_cursor_positioning = true
     background = "transparent"
     foreground = "p:git-grey"
     template = " <#a0a0a0>{{.Working.Untracked}}</> {{ url .HEAD .UpstreamURL }}{{ if or (.Working.Changed) (.Staging.Changed) }}*{{ end }} <cyan>{{ if gt .Behind 0 }}↓{{ .Behind}}{{ end }}{{ if gt .Ahead 0}}↑{{ .Ahead}}{{end}}</>"
-    
+    # template = " {{ .UpstreamIcon }}{{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }}  {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }}  {{ .Staging.String }}{{ end }}"
+   
    
     [blocks.segments.properties]
       commit_icon  = "@"
       fetch_status = true
 
 [[blocks]]
-  type = "rprompt"
-  # alignment = "right"
-  overflow = "hidden"
+  type = "prompt"
+  alignment = "right"
+  # overflow = "hidden"
+
+  [[blocks.segments]]
+    type = "executiontime"
+    style = "plain"
+    foreground = "p:yellow"
+    background = "transparent"
+    template = " {{ div .Ms 1000 }}s "
+
+     [blocks.segments.properties]
+      threshold = 5000 
   
   [[blocks.segments]]
     type = "python"
     style = "plain"
     foreground = "#3670A0"
-    template = " {{ if .Venv }}{{ .Venv }} {{ .Full }} {{ end }}"
+    background = "transparent"
+    template = " {{ if .Venv }}{{ .Venv }}{{ end }} "
+    # template = " {{ if .Venv }}{{ .Venv }} {{ .Full }} {{ end }}"
+      [blocks.segments.properties]
+        cache_version = true
+        display_mode = "files"
 
   [[blocks.segments]]
     type = "php"
@@ -56,33 +92,18 @@ enable_cursor_positioning = true
     foreground = "#777bb4"
     template = " "
     
-  
-  # [[blocks.segments]]
-  #   type = "react"
-  #   style = "plain"
-  #   foreground = "#81a1c1"
-  #   template = "  "
-
   [[blocks.segments]]  
     type = "node"
     style = "plain"
     foreground = "#6CA35E"
     template = " "
 
-  [[blocks.segments]]
-    type = "executiontime"
-    style = "plain"
-    foreground = "p:yellow"
-    background = "transparent"
-    template = " {{ div .Ms 1000 }}s"
-
-    [blocks.segments.properties]
-      threshold = 5000 
 
    [[blocks.segments]]
     type = "command"
     style = "plain"
     foreground = "p:git-grey"
+    template = "| {{ .Output }}"
 
     [blocks.segments.properties]
       command = "git log --pretty=format:%cr -1"
@@ -102,7 +123,7 @@ enable_cursor_positioning = true
       "{{if gt .Code 0}}p:red{{end}}",
     ]
     template = "▷"
-    
+
 [transient_prompt]
   foreground = "p:white"
   foreground_templates = [
@@ -115,10 +136,6 @@ enable_cursor_positioning = true
   foreground = "#999999"
   background = "transparent"
   template = "❭❭ "
-
-
-
-
 
 
 [palette]
