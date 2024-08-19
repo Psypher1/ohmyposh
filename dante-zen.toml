@@ -59,6 +59,8 @@ enable_cursor_positioning = true
     [blocks.segments.properties]
       commit_icon  = "@"
       fetch_status = true
+      full_branch_path = true
+      fetch_upstream_icon = true
 
 [[blocks]]
   type = "prompt"
