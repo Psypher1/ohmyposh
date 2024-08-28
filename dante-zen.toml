@@ -1,10 +1,8 @@
-#:schema https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
-
 version = 2
 final_space = true
-# console_title_template = "{{ .Shell }} in {{ .Folder }}"
 console_title_template = "{{ .Folder }}"
-enable_cursor_positioning = true
+# console_title_template = "{{ .Shell }} in {{ .Folder }}"
+# enable_cursor_positioning = true
 
 [[blocks]]
   type = "prompt"
@@ -38,21 +36,19 @@ enable_cursor_positioning = true
     style = "plain"
     background = "transparent"
     foreground = "p:cyan-alt"
-    # template = "{{ .Path }}"
-    # template = " 󰉖 {{ path .Path .Location }}"
     template = "󰉖 {{ path .Path .Location }}"
    
     [blocks.segments.properties]
+      folder_icon = "󰉖"
       folder_separator_icon = "/"
       style = "full"
- 
   
   [[blocks.segments]]
     type = "git"
     style = "plain"
     background = "transparent"
     foreground = "p:git-grey"
-    template = " <#a0a0a0>{{.Working.Untracked}}</> {{ url .HEAD .UpstreamURL }}{{ if or (.Working.Changed) (.Staging.Changed) }}*{{ end }} <cyan>{{ if gt .Behind 0 }}↓{{ .Behind}}{{ end }}{{ if gt .Ahead 0}}↑{{ .Ahead}}{{end}}</>"
+    template = " <#a0a0a0>{{.Working.Untracked}}</> {{  url .HEAD .UpstreamURL }}{{ if or (.Working.Changed) (.Staging.Changed) }}*{{ end }} <cyan>{{ if gt .Behind 0 }}⇣{{ .Behind }}{{end}}{{ if gt .Ahead 0 }}↑{{ .Ahead }}{{end}}</>"
     # template = " {{ .UpstreamIcon }}{{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }}  {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }}  {{ .Staging.String }}{{ end }}"
    
    
@@ -72,7 +68,7 @@ enable_cursor_positioning = true
     style = "plain"
     foreground = "p:yellow"
     background = "transparent"
-    template = " {{ div .Ms 1000 }}s "
+    template = " {{ div .Ms 1000 }}s <#6f6f6f>|</> "
 
      [blocks.segments.properties]
       threshold = 5000 
@@ -80,6 +76,8 @@ enable_cursor_positioning = true
   [[blocks.segments]]
     type = "python"
     style = "plain"
+    # leading_diamond = ""
+    # trailing_diamond = ""
     foreground = "#3670A0"
     background = "transparent"
     template = " {{ if .Venv }}{{ .Venv }}{{ end }} "
@@ -100,12 +98,11 @@ enable_cursor_positioning = true
     foreground = "#6CA35E"
     template = " "
 
-
    [[blocks.segments]]
     type = "command"
     style = "plain"
     foreground = "p:git-grey"
-    template = "| {{ .Output }}"
+    template = "<#6f6f6f>|</> {{ .Output }}"
 
     [blocks.segments.properties]
       command = "git log --pretty=format:%cr -1"
@@ -119,20 +116,21 @@ enable_cursor_positioning = true
   [[blocks.segments]]
     type = "text"
     style = "plain"
-    foreground = "p:white"
-    background = "transparent"
     foreground_templates = [
       "{{if gt .Code 0}}p:red{{end}}",
+      "{{if eq .Code 0}}p:white{{end}}",
     ]
+    foreground = "p:white"
+    background = "transparent"
     template = "▷"
 
 [transient_prompt]
-  foreground = "p:white"
   foreground_templates = [
-    "{{if gt .Code 0}}p:red{{end}}",
-  ]
-  background = 'transparent'
-  template = '▷ '
+      "{{if gt .Code 0}}p:red{{end}}",
+      "{{if eq .Code 0}}p:white{{end}}",
+    ]
+  background = "transparent"
+  template = "▷ "
 
 [secondary_prompt]
   foreground = "#999999"
@@ -143,6 +141,7 @@ enable_cursor_positioning = true
 [palette]
   cyan-alt = "#3cdfff"
   git-grey ="#6c6c6c"
+  git-greyer ="#6f6f6f"
   black = "#262B44"
   paleblue = "#4B95E9"
   # lightblue = "#8aecff"

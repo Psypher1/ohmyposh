@@ -2,6 +2,25 @@
 
 > I love it!
 
+![](images/dante-zen.png)
 
-![](images/zen-omp.png)
+## Segments
 
+### Left Prompt
+
+- Path - Clickable
+- Git
+    - Untracked files
+    - Clickable head
+    - Branch Status
+
+### Right Prompt
+- Execution time
+- Language
+  - Python
+  - PHP
+  - Node
+- Command - last modified time
+
+### Left Prompt
+- Text
